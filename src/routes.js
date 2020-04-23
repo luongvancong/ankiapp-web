@@ -2,6 +2,7 @@ import DeskList from "./Screens/Desk/List";
 import DeskDetail from "./Screens/Desk/Detail";
 import DeskCard from "./Screens/Desk/Cards";
 import DashBoard from "./Screens/DashBoard";
+import Login from "./Screens/Login";
 
 
 const routes = [
@@ -9,6 +10,12 @@ const routes = [
         path: "/",
         exact: true,
         component: DashBoard
+    },
+    {
+        path: "/login",
+        name: "login",
+        exact: true,
+        component: Login
     },
     {
         path: "/desks",

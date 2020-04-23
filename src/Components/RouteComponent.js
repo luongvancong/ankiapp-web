@@ -1,13 +1,20 @@
 import React from 'react';
-import {Route, Switch} from "react-router-dom";
+import {Redirect, Route, Switch} from "react-router-dom";
 import _ from 'lodash';
 import routes from "../routes";
+import {cookieService} from "../Services/CookieService";
+import Login from "../Screens/Login";
+import RequireAuthRoute from "./RequireAuthRoute";
+import DashBoard from "../Screens/DashBoard";
 
 
 class RouteComponent extends React.Component {
 
     constructor(props) {
         super(props);
+        this.state = {
+            logged: false
+        };
         this.routes = [];
         this.collectRoute(routes);
     }
@@ -27,20 +34,33 @@ class RouteComponent extends React.Component {
         }
     }
 
+    componentDidMount() {
+        const authToken = cookieService.getCookie('auth_token');
+        if (authToken) {
+            this.setState({
+                logged: true
+            });
+        }
+    }
+
+    renderRouteComponent = (route, props) => {
+        return <route.component {...props} />;
+    };
+
     render() {
-        const _routes = _.reverse(this.routes);
+
         return (
             <Switch>
-                {_routes.map((route, i) => (
-                    <Route
-                        key={i}
-                        path={route.path}
-                        exact={route.exact}
-                        render={props => (
-                            <route.component {...props} />
-                        )}
-                    />
-                ))}
+                <Route
+                    path={"/login"}
+                    exact={true}
+                    render={props => <Login {...props}/>}
+                />
+                <RequireAuthRoute
+                    path={"/"}
+                    exact={true}
+                    component={DashBoard}
+                />
             </Switch>
         )
     }

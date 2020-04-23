@@ -1,8 +1,7 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
-import {Route, Router, Switch, BrowserRouter, Link} from "react-router-dom";
-import routes from './routes';
+import "./assets/scss/main.scss";
+
+import {BrowserRouter} from "react-router-dom";
 import RouteComponent from "./Components/RouteComponent";
 
 
