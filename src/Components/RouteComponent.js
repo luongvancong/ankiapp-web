@@ -1,18 +1,31 @@
 import React from 'react';
-import {Route, Switch} from "react-router-dom";
+import {Switch} from "react-router-dom";
 import Login from "../Screens/Login";
 import RequireAuthRoute from "./RequireAuthRoute";
 import DashBoard from "../Screens/DashBoard";
+import RedirectIfLoggedRoute from "./RedirectIfLoggedRoute";
+import DeskDetail from "../Screens/Desk/Detail";
+import DeskStudy from "../Screens/Desk/Study";
 
 class RouteComponent extends React.Component {
 
     render() {
         return (
             <Switch>
-                <Route
+                <RedirectIfLoggedRoute
                     path={"/login"}
                     exact={true}
-                    render={props => <Login {...props}/>}
+                    component={Login}
+                />
+                <RequireAuthRoute
+                    path={"/desks/:id"}
+                    exact={true}
+                    component={DeskDetail}
+                />
+                <RequireAuthRoute
+                    path={"/desks/:id/study"}
+                    exact={true}
+                    component={DeskStudy}
                 />
                 <RequireAuthRoute
                     path={"/"}

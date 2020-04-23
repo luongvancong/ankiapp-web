@@ -1,0 +1,14 @@
+.layout {
+  &--default {
+    .header {
+      .username {
+        color: #fff;
+      }
+    }
+    .container {
+      min-height: calc(100vh - 64px);
+      padding-left: 30px;
+      padding-right: 30px;
+    }
+  }
+}

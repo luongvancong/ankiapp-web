@@ -1,19 +1,107 @@
-import React, {Component} from 'react';
+import React from 'react';
+import {Button, Modal, Spin, Typography} from "antd";
+import _ from 'lodash';
+import Default from "../Layout/Default";
+import DeskApiService from "../../Services/DeskApiService";
 import {Link} from "react-router-dom";
-import {http} from "../../Services/ApiService";
+import DeskForm from "../../Components/DeskForm";
 
-class DashBoard extends Component {
+const { Title } = Typography;
 
-    componentDidMount() {
-        http.get('/api/v1/me')
-            .then(response => {
-                console.log(response.data);
-            })
+class DashBoard extends Default {
+
+    constructor(props) {
+        super(props);
+        this.state = {
+            ...this.state,
+            loading: false,
+            desks: [],
+            totalDesks: 0,
+            isShowModalCreateNewDesk: false
+        }
     }
 
-    render() {
+    apiCall = () => {
+        this.fetchDesks();
+    };
+
+    fetchDesks = () => {
+        this.setState({loading: true});
+        DeskApiService.list()
+            .then(response => {
+                this.setState({
+                    desks: _.get(response, 'data.data'),
+                    totalDesks: _.get(response, 'data.total')
+                })
+            })
+            .finally(() => {
+                this.setState({loading: false});
+            })
+    };
+
+    showModalCreateNewDesk = () => {
+        this.setState({
+            isShowModalCreateNewDesk: true
+        })
+    };
+
+    hideModalCreateNewDesk = () => {
+        this.setState({
+            isShowModalCreateNewDesk: false
+        })
+    };
+
+    handleCreateNewDesk = (values) => {
+        this.setState({loading: true});
+        DeskApiService.create(values)
+            .then(response => {
+                this.hideModalCreateNewDesk();
+                this.fetchDesks();
+            })
+            .finally(() => {
+                this.setState({loading: false});
+            })
+    };
+
+    content = () => {
+        const {loading, desks} = this.state;
         return (
-            <div>Dashboard</div>
+            <Spin spinning={loading}>
+                <div className={'dashboard'}>
+                    <Title className={'dashboard__title'}>
+                        <span>Desks</span>
+                        <Button
+                            loading={loading}
+                            onClick={this.showModalCreateNewDesk}
+                            type={'primary'}
+                            className={'float-right btn-create-new-desk'}
+                        >Create New Desk</Button>
+                    </Title>
+
+                    <div className="desks">
+                        {desks.map(item => (
+                            <Button
+                                type={'default'}
+                                className={'desks__item'}
+                            >
+                                <Link to={`/desks/${_.get(item, 'id')}`}>{_.get(item, 'name')}</Link>
+                            </Button>
+                        ))}
+                    </div>
+                </div>
+
+                <Modal
+                    title="Create new desk"
+                    visible={this.state.isShowModalCreateNewDesk}
+                    footer={null}
+                    destroyOnClose={true}
+                    onCancel={this.hideModalCreateNewDesk}
+                >
+                    <DeskForm
+                        onSubmit={this.handleCreateNewDesk}
+                    />
+                </Modal>
+            </Spin>
         )
     }
 }

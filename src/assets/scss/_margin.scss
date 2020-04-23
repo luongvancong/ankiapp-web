@@ -1,0 +1,22 @@
+$marginClasses: ("mg-t-", "mg-bt-", "mg-l-", "mg-r-");
+
+@each $class in $marginClasses {
+  @for $i from 1 through 60 {
+    @if $i % 5 {
+      .#{$class}#{$i} {
+        @if $class == 'mg-t-' {
+          margin-top: #{$i}px;
+        }
+        @if $class == 'mg-bt-' {
+          margin-bottom: #{$i}px;
+        }
+        @if $class == 'mg-l-' {
+          margin-left: #{$i}px;
+        }
+        @if $class == 'mg-r-' {
+          margin-right: #{$i}px;
+        }
+      }
+    }
+  }
+}

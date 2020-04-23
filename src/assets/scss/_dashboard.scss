@@ -1,0 +1,15 @@
+.dashboard {
+  padding-top: 10px;
+  &__title {
+    .btn-create-new-desk {
+      position: relative;
+      top: 8px;
+    }
+  }
+  .desks {
+    margin-top: 20px;
+    &__item {
+      margin-right: 10px;
+    }
+  }
+}

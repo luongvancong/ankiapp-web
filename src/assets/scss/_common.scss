@@ -1,0 +1,23 @@
+@import "margin";
+
+.clearfix {
+  clear: both;
+}
+.float-left {
+  float: left;
+}
+.float-right {
+  float: right;
+}
+
+.pointer {
+  cursor: pointer;
+}
+.text-danger {
+  color: red;
+  &--important {
+    color: red !important;
+  }
+}
+
+
