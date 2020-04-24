@@ -1,0 +1,19 @@
+.study {
+  padding-top: 30px;
+  .card {
+    text-align: center;
+    &__audio {
+      text-align: center;
+    }
+    &__image {
+      img {
+        text-align: center;
+        display: inline-block;
+        max-width: 240px;
+        max-height: 240px;
+        object-fit: cover;
+        object-position: center center;
+      }
+    }
+  }
+}

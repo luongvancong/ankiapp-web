@@ -1,7 +1,9 @@
 import React from 'react';
-import {Layout} from "antd";
+import {Button, Layout} from "antd";
 import _ from 'lodash';
 import {http} from "../../Services/ApiService";
+import {notification} from "antd/es";
+import {Link} from "react-router-dom";
 
 const {Header, Content} = Layout;
 
@@ -43,10 +45,15 @@ class Default extends React.Component {
         return (
             <Layout className={'layout--default'}>
                 <Header className="header">
-                    <div className="text-right username">{me.name}</div>
+                    <div className="float-right username">{me.name}</div>
                 </Header>
                 <Content>
                     <div className="container">
+                        <div className={'mg-t-20'}>
+                            <Link className={'link-to-dashboard'} to={'/'}>
+                                <Button>Dashboard</Button>
+                            </Link>
+                        </div>
                         {this.content()}
                     </div>
                 </Content>

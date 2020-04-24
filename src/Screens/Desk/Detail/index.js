@@ -1,24 +1,38 @@
-import React, {Component} from 'react';
+import React from 'react';
 import _ from 'lodash';
 import Default from "../../Layout/Default";
 import DeskApiService from "../../../Services/DeskApiService";
-import {Button, Modal, Table} from "antd";
+import {Button, Modal, Spin, Table} from "antd";
 import CardForm from "../../../Components/CardForm";
 import CardApiService from "../../../Services/CardApiService";
 import {notification} from "antd/es";
 import {Link} from "react-router-dom";
-import EditOutlined from "@ant-design/icons/es/icons/EditOutlined";
 import DeleteOutlined from "@ant-design/icons/es/icons/DeleteOutlined";
 
 class DeskDetail extends Default {
 
+
     componentDidMount() {
         super.componentDidMount();
+        this.fetchDesk();
         this.fetchCards();
     }
 
     getId = () => {
         return this.props.match.params.id;
+    };
+
+    fetchDesk = () => {
+        this.setState({loading: true});
+        DeskApiService.getById(this.getId())
+            .then(response => {
+                this.setState({
+                    desk: _.get(response, 'data')
+                });
+            })
+            .finally(() => {
+                this.setState({loading: false});
+            })
     };
 
     fetchCards = () => {
@@ -41,12 +55,14 @@ class DeskDetail extends Default {
             {
                 title: "Front",
                 key: 'front',
-                dataIndex: 'front'
+                dataIndex: 'front',
+                width: 200,
             },
             {
                 title: "Back",
                 key: "back",
-                dataIndex: 'back'
+                dataIndex: 'back',
+                back: 300,
             },
             {
                 title: "Example",
@@ -54,19 +70,54 @@ class DeskDetail extends Default {
                 dataIndex: 'example'
             },
             {
+                title: "Audio",
+                key: "audio",
+                dataIndex: "audio",
+                width: 300,
+                render: (text) => {
+                    if (text) {
+                        return <audio controls>
+                            <source src={text} type="audio/mpeg"/>
+                        </audio>
+                    }
+                    return '--';
+                }
+            },
+            {
                 title: "Actions",
                 key: 'action',
+                width: 40,
                 render: (text, record) => {
                     return (
                         <>
-                            <EditOutlined className={'pointer mg-r-10'} />
-                            <DeleteOutlined className={'pointer text-danger text-danger--important'} />
+                            <DeleteOutlined
+                                onClick={this.handleDeleteCard.bind(this, record)}
+                                className={'pointer text-danger text-danger--important'}
+                            />
                         </>
                     )
                 }
             }
         ];
     };
+
+    handleDeleteCard = (card) => {
+        Modal.confirm({
+            title: "Delete card",
+            content: "Are you sure to want to delete this card?",
+            onOk: () => {
+                CardApiService.delete(card.id)
+                    .then(() => {
+                        notification.success({
+                            message: "Delete successful"
+                        });
+
+                        this.fetchCards();
+                    })
+            }
+        });
+    };
+
 
     showModalCreateNewCard = () => {
         this.setState({
@@ -76,7 +127,9 @@ class DeskDetail extends Default {
 
     hideModalCreateNewCard = () => {
         this.setState({
-            isShowModalCreateNewCard: false
+            isShowModalCreateNewCard: false,
+            isShowModalEditCard: false,
+            card: {}
         })
     };
 
@@ -107,12 +160,13 @@ class DeskDetail extends Default {
             })
     };
 
+
     content = () => {
-        const {cardPagination} = this.state;
+        const {cardPagination, desk} = this.state;
         return (
             <div className="desk-detail">
                 <div className={'clearfix mg-bt-10 mg-t-10'}>
-                    <h1 className={'float-left'}>Desk Detail</h1>
+                    <h1 className={'float-left'}>Desk {_.get(desk, 'name')}</h1>
                     <div className="float-right">
                         <Button
                             type={'default'}
@@ -132,6 +186,7 @@ class DeskDetail extends Default {
                 <Table
                     columns={this.getColumns()}
                     dataSource={this.state.cards}
+                    scroll={{x: 1000}}
                     pagination={{
                         current: _.get(cardPagination, 'current_page'),
                         total: _.get(cardPagination, 'total'),

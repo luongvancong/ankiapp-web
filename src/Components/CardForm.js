@@ -27,7 +27,9 @@ class CardForm extends React.Component {
                     name={'back'}
                     required={true}
                 >
-                    <Input />
+                    <Input
+
+                    />
                 </Form.Item>
 
                 <Form.Item
@@ -35,7 +37,9 @@ class CardForm extends React.Component {
                     name={'example'}
                     required={true}
                 >
-                    <Input />
+                    <Input
+
+                    />
                 </Form.Item>
 
                 <Form.Item
@@ -73,6 +77,7 @@ class CardForm extends React.Component {
 }
 
 CardForm.defaultProps = {
+    card: {},
     onSubmit: (values) => {}
 };
 

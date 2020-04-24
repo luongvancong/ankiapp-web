@@ -64,19 +64,20 @@ class DashBoard extends Default {
     };
 
     content = () => {
-        const {loading, desks} = this.state;
+        const {loading, desks, totalDesks} = this.state;
         return (
             <Spin spinning={loading}>
                 <div className={'dashboard'}>
                     <Title className={'dashboard__title'}>
-                        <span>Desks</span>
-                        <Button
-                            loading={loading}
-                            onClick={this.showModalCreateNewDesk}
-                            type={'primary'}
-                            className={'float-right btn-create-new-desk'}
-                        >Create New Desk</Button>
+                        <span>Your Desks({totalDesks})</span>
                     </Title>
+
+                    <Button
+                        loading={loading}
+                        onClick={this.showModalCreateNewDesk}
+                        type={'primary'}
+                        className={'btn-create-new-desk'}
+                    >Create New Desk</Button>
 
                     <div className="desks">
                         {desks.map(item => (

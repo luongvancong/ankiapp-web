@@ -1,6 +1,6 @@
 import React from 'react';
-import {isLogged} from "../Services/AuthService";
 import {Redirect, Route} from "react-router-dom";
+import {http} from "../Services/ApiService";
 
 class RedirectIfLoggedRoute extends React.Component {
 
@@ -10,13 +10,6 @@ class RedirectIfLoggedRoute extends React.Component {
             path={this.props.path}
             exact={this.props.exact}
             render={props => {
-                if (isLogged) {
-                    return <Redirect
-                        to={{
-                            pathname: "/"
-                        }}
-                    />
-                }
                 return <RouterComponent {...props} />
             }}
         />
