@@ -1,5 +1,6 @@
 .layout {
   .header {
+    padding: 0 15px;
     .link-to-dashboard {
       color: #fff;
       font-weight: bold;
@@ -16,8 +17,8 @@
     .container {
       min-height: calc(100vh - 64px);
       padding-top: 30px;
-      padding-left: 50px;
-      padding-right: 50px;
+      padding-left: 15px;
+      padding-right: 15px;
     }
   }
 }
