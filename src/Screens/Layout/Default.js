@@ -1,9 +1,9 @@
 import React from 'react';
-import {Button, Layout} from "antd";
+import {Dropdown, Layout, Menu} from "antd";
 import _ from 'lodash';
 import {http} from "../../Services/ApiService";
-import {notification} from "antd/es";
 import {Link} from "react-router-dom";
+import {cookieService} from "../../Services/CookieService";
 
 const {Header, Content} = Layout;
 
@@ -40,20 +40,40 @@ class Default extends React.Component {
         )
     };
 
+    handleLogout = () => {
+        cookieService.remove('auth_token');
+        this.props.history.replace('/login');
+    };
+
+    renderDropdownMenu = () => {
+        return (
+            <Menu>
+                <Menu.Item>
+                    <span
+                        className={'pointer'}
+                        onClick={this.handleLogout}
+                    >Logout</span>
+                </Menu.Item>
+            </Menu>
+        )
+    };
+
     render() {
         const {me} = this.state;
         return (
-            <Layout className={'layout--default'}>
+            <Layout className={'layout layout--default'}>
                 <Header className="header">
-                    <div className="float-right username">{me.name}</div>
+                    <div className={'float-left'}>
+                        <Link className={'link-to-dashboard'} to={'/'}>
+                            <span>Dashboard</span>
+                        </Link>
+                    </div>
+                    <Dropdown overlay={this.renderDropdownMenu} trigger={['click']}>
+                        <div className="float-right username">{_.get(me, 'name')}</div>
+                    </Dropdown>
                 </Header>
                 <Content>
                     <div className="container">
-                        <div className={'mg-t-20'}>
-                            <Link className={'link-to-dashboard'} to={'/'}>
-                                <Button>Dashboard</Button>
-                            </Link>
-                        </div>
                         {this.content()}
                     </div>
                 </Content>

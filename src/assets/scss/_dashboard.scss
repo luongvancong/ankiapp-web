@@ -9,7 +9,22 @@
   .desks {
     margin-top: 20px;
     &__item {
-      margin-right: 10px;
+      background-color: #fbfbfb;
+      text-align: center;
+      padding: 20px;
+      position: relative;
+      &__name {
+        font-weight: bold;
+        text-transform: uppercase;
+        font-size: 16px;
+        margin-bottom: 20px;
+      }
+      &__delete {
+        color: #e0e0e0;
+        position: absolute;
+        top: 4px;
+        right: 4px;
+      }
     }
   }
 }

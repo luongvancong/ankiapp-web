@@ -36,11 +36,11 @@ class Login extends React.Component {
 
             this.setState({
                 logged: true
+            }, () => {
+                setTimeout(() => {
+                    this.props.history.replace('/');
+                }, 2000);
             });
-
-            setTimeout(() => {
-                this.props.history.replace('/');
-            }, 2000);
 
         }).catch(err => {
             notification.error({

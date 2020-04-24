@@ -2,14 +2,19 @@ import axios from 'axios';
 import _ from 'lodash';
 import * as env from '../env';
 import {cookieService} from "./CookieService";
-import {notification, Modal} from "antd";
+import {Modal} from "antd";
 
 const http = axios.create({
     baseURL: env.API_URL,
-    timeout: 1000,
-    headers: {
-        Authorization: `Bearer ${cookieService.getCookie('auth_token')}`
-    }
+    timeout: 1000
+});
+
+http.interceptors.request.use(function (config) {
+    config.headers['Authorization'] = `Bearer ${cookieService.getCookie('auth_token')}`;
+    return config;
+}, function (error) {
+    // Do something with request error
+    return Promise.reject(error);
 });
 
 http.interceptors.response.use(function (response) {
@@ -20,11 +25,12 @@ http.interceptors.response.use(function (response) {
     const statusCode = _.get(error, 'response.status');
 
     if (statusCode === 401) {
-        notification.error({
-            message: "Unauthorized"
-        });
-
-        window.location.href = '/login';
+        Modal.error({
+            content: "Unauthorized. Please login",
+            onOk: () => {
+                window.location.href = '/login';
+            }
+        })
     } else {
         return Promise.reject(error);
     }

@@ -1,4 +1,12 @@
 .layout {
+  .header {
+    .link-to-dashboard {
+      color: #fff;
+      font-weight: bold;
+      text-transform: uppercase;
+      cursor: pointer;
+    }
+  }
   &--default {
     .header {
       .username {
@@ -7,8 +15,9 @@
     }
     .container {
       min-height: calc(100vh - 64px);
-      padding-left: 30px;
-      padding-right: 30px;
+      padding-top: 30px;
+      padding-left: 50px;
+      padding-right: 50px;
     }
   }
 }

@@ -1,10 +1,12 @@
 import React from 'react';
-import {Button, Modal, Spin, Typography} from "antd";
+import {Button, Col, Modal, Row, Spin, Typography} from "antd";
 import _ from 'lodash';
 import Default from "../Layout/Default";
 import DeskApiService from "../../Services/DeskApiService";
 import {Link} from "react-router-dom";
 import DeskForm from "../../Components/DeskForm";
+import DeleteOutlined from "@ant-design/icons/es/icons/DeleteOutlined";
+import {notification} from "antd/es";
 
 const { Title } = Typography;
 
@@ -63,6 +65,28 @@ class DashBoard extends Default {
             })
     };
 
+    handleDeleteDesk = (item) => {
+
+        Modal.confirm({
+            title: "Are you sure to want to delete this desk",
+            onOk: () => {
+                this.setState({loading: true});
+                DeskApiService.delete(item.id)
+                    .then(() => {
+
+                        notification.success({
+                            message: `Desk ${_.get(item, 'name', '--')} was deleted`
+                        });
+
+                        this.fetchDesks();
+                    })
+                    .finally(() => {
+                        this.setState({loading: false});
+                    })
+            }
+        });
+    };
+
     content = () => {
         const {loading, desks, totalDesks} = this.state;
         return (
@@ -80,14 +104,32 @@ class DashBoard extends Default {
                     >Create New Desk</Button>
 
                     <div className="desks">
-                        {desks.map(item => (
-                            <Button
-                                type={'default'}
-                                className={'desks__item'}
-                            >
-                                <Link to={`/desks/${_.get(item, 'id')}`}>{_.get(item, 'name')}</Link>
-                            </Button>
-                        ))}
+                        <Row gutter={20}>
+                            {Array.isArray(desks) && desks.map(item => (
+                                <Col xs={24} sm={12} md={8} lg={6} xlg={4} className={'mg-bt-10'}>
+                                    <div
+                                        className={'desks__item'}
+                                    >
+                                        <div className="desks__item__name">{_.get(item, 'name')}</div>
+                                        <DeleteOutlined
+                                            className={'desks__item__delete'}
+                                            onClick={this.handleDeleteDesk.bind(this, item)}
+                                        />
+                                        <Link
+                                            to={`/desks/${_.get(item, 'id')}`}
+                                        >
+                                            <Button>View</Button>
+                                        </Link>
+                                        <Link
+                                            to={`/desks/${_.get(item, 'id')}/study`}
+                                            className={'mg-l-10'}
+                                        >
+                                            <Button type={'primary'}>Study</Button>
+                                        </Link>
+                                    </div>
+                                </Col>
+                            ))}
+                        </Row>
                     </div>
                 </div>
 

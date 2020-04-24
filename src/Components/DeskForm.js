@@ -4,8 +4,13 @@ import {Button, Form, Input} from "antd";
 class DeskForm extends React.Component {
 
     render() {
+        const {desk} = this.props;
         return (
-            <Form layout={'vertical'} onFinish={this.props.onSubmit}>
+            <Form
+                layout={'vertical'}
+                initialValues={desk}
+                onFinish={this.props.onSubmit}
+            >
                 <Form.Item
                     label={'Name'}
                     name={'name'}
@@ -13,9 +18,7 @@ class DeskForm extends React.Component {
                 >
                     <Input />
                 </Form.Item>
-                <Form.Item
-
-                >
+                <Form.Item>
                    <Button htmlType={'submit'} type={'primary'}>Update</Button>
                 </Form.Item>
             </Form>
@@ -24,6 +27,7 @@ class DeskForm extends React.Component {
 }
 
 DeskForm.defaultProps = {
+    desk: {},
     onSubmit: (values) => {}
 };
 

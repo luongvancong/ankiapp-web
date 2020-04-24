@@ -68,11 +68,11 @@ class DeskStudy extends Default {
         }
         return (
             <div className={'card'}>
-                <p>{oneCard.front}</p>
+                <p className={'card__front'}>{oneCard.front}</p>
                 {isShowAnswer && (
                     <>
-                        <p>{oneCard.back}</p>
-                        <p>{oneCard.example}</p>
+                        <p className={'card__back'}>{oneCard.back}</p>
+                        <p className={'card__example'}>{oneCard.example}</p>
                         {oneCard.audio && (
                             <div className="card__audio">
                                 <audio controls autoPlay={true}>

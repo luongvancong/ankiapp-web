@@ -2,12 +2,13 @@ import React from 'react';
 import _ from 'lodash';
 import Default from "../../Layout/Default";
 import DeskApiService from "../../../Services/DeskApiService";
-import {Button, Modal, Spin, Table} from "antd";
+import {Button, Input, Modal, Spin, Table} from "antd";
 import CardForm from "../../../Components/CardForm";
 import CardApiService from "../../../Services/CardApiService";
 import {notification} from "antd/es";
 import {Link} from "react-router-dom";
 import DeleteOutlined from "@ant-design/icons/es/icons/DeleteOutlined";
+import EditOutlined from "@ant-design/icons/es/icons/EditOutlined";
 
 class DeskDetail extends Default {
 
@@ -160,13 +161,60 @@ class DeskDetail extends Default {
             })
     };
 
+    showEditDesk = () => {
+        this.setState({
+            isShowEditDesk: true
+        })
+    };
+
+
+    handleQuickEditDesk = (field, e) => {
+        console.log(e.target.value);
+        const data = {
+            [field] : e.target.value
+        };
+        this.setState({loading: true});
+        DeskApiService.update(this.getId(), data)
+            .then(() => {
+                notification.success({
+                    message: "Update desk successful"
+                });
+
+                this.setState({
+                    isShowEditDesk: false
+                });
+
+                this.fetchDesk();
+            })
+            .finally(() => {
+                this.setState({loading: false});
+            })
+    };
 
     content = () => {
-        const {cardPagination, desk} = this.state;
+        const {cardPagination, desk, isShowEditDesk, loading} = this.state;
         return (
             <div className="desk-detail">
                 <div className={'clearfix mg-bt-10 mg-t-10'}>
-                    <h1 className={'float-left'}>Desk {_.get(desk, 'name')}</h1>
+                    <h1 className={'float-left'}>
+                        {!isShowEditDesk ? (
+                            <>
+                                Desk {_.get(desk, 'name')}
+                                <EditOutlined
+                                    className={'mg-l-5 color-blue pointer'}
+                                    onClick={this.showEditDesk}
+                                />
+                            </>
+                        ) : (
+                            <Input
+                                autoFocus={true}
+                                defaultValue={_.get(desk, 'name')}
+                                disabled={loading}
+                                onPressEnter={this.handleQuickEditDesk.bind(this, 'name')}
+                            />
+                        )}
+
+                    </h1>
                     <div className="float-right">
                         <Button
                             type={'default'}
