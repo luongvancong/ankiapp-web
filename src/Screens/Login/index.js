@@ -56,6 +56,7 @@ class Login extends React.Component {
         return (
             <div className="login-form">
                 <Spin spinning={logged}>
+                    <h1>Login</h1>
                     <Form layout={'vertical'} onFinish={this.handleSubmit}>
                         <Form.Item
                             label={'Username'}
