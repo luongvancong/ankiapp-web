@@ -6,7 +6,7 @@ import {Modal} from "antd";
 
 const http = axios.create({
     baseURL: env.API_URL,
-    timeout: 1000
+    timeout: 60000
 });
 
 http.interceptors.request.use(function (config) {
