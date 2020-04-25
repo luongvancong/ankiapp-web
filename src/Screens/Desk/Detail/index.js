@@ -169,7 +169,6 @@ class DeskDetail extends Default {
 
 
     handleQuickEditDesk = (field, e) => {
-        console.log(e.target.value);
         const data = {
             [field] : e.target.value
         };
@@ -232,6 +231,7 @@ class DeskDetail extends Default {
                 </div>
 
                 <Table
+                    loading={loading}
                     columns={this.getColumns()}
                     dataSource={this.state.cards}
                     scroll={{x: 1000}}
