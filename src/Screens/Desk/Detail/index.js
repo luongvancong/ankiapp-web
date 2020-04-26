@@ -250,6 +250,7 @@ class DeskDetail extends Default {
                     destroyOnClose={true}
                 >
                     <CardForm
+                        loading={loading}
                         onSubmit={this.handleCreateNewCard}
                     />
                 </Modal>

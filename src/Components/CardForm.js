@@ -12,6 +12,7 @@ class CardForm extends React.Component {
     };
 
     render() {
+        const {loading} = this.props;
         return (
             <Form layout={'vertical'} onFinish={this.props.onSubmit}>
                 <Form.Item
@@ -56,7 +57,10 @@ class CardForm extends React.Component {
                 </Form.Item>
 
                 <Form.Item>
-                    <Button htmlType={'submit'} type={'primary'}>Update</Button>
+                    <Button
+                        loading={loading}
+                        htmlType={'submit'}
+                        type={'primary'}>Update</Button>
                 </Form.Item>
             </Form>
         )
@@ -65,6 +69,7 @@ class CardForm extends React.Component {
 
 CardForm.defaultProps = {
     card: {},
+    loading: false,
     onSubmit: (values) => {}
 };
 
