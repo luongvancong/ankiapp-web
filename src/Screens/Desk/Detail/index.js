@@ -247,6 +247,7 @@ class DeskDetail extends Default {
                     footer={null}
                     visible={this.state.isShowModalCreateNewCard}
                     onCancel={this.hideModalCreateNewCard}
+                    destroyOnClose={true}
                 >
                     <CardForm
                         onSubmit={this.handleCreateNewCard}
