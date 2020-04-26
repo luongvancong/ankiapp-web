@@ -9,6 +9,7 @@ import {notification} from "antd/es";
 import {Link} from "react-router-dom";
 import DeleteOutlined from "@ant-design/icons/es/icons/DeleteOutlined";
 import EditOutlined from "@ant-design/icons/es/icons/EditOutlined";
+import CloseOutlined from "@ant-design/icons/es/icons/CloseOutlined";
 
 class DeskDetail extends Default {
 
@@ -167,6 +168,12 @@ class DeskDetail extends Default {
         })
     };
 
+    hideEditDesk = () => {
+        this.setState({
+            isShowEditDesk: false
+        })
+    };
+
 
     handleQuickEditDesk = (field, e) => {
         const data = {
@@ -195,7 +202,7 @@ class DeskDetail extends Default {
         return (
             <div className="desk-detail">
                 <div className={'clearfix mg-bt-10 mg-t-10'}>
-                    <h1 className={'float-left'}>
+                    <h1 className={'desk-detail__heading-name'}>
                         {!isShowEditDesk ? (
                             <>
                                 Desk {_.get(desk, 'name')}
@@ -205,16 +212,22 @@ class DeskDetail extends Default {
                                 />
                             </>
                         ) : (
-                            <Input
-                                autoFocus={true}
-                                defaultValue={_.get(desk, 'name')}
-                                disabled={loading}
-                                onPressEnter={this.handleQuickEditDesk.bind(this, 'name')}
-                            />
+                            <>
+                                <Input
+                                    autoFocus={true}
+                                    defaultValue={_.get(desk, 'name')}
+                                    disabled={loading}
+                                    onPressEnter={this.handleQuickEditDesk.bind(this, 'name')}
+                                />
+                                <CloseOutlined
+                                    className={'desk-detail__close_edit'}
+                                    onClick={this.hideEditDesk}
+                                />
+                            </>
                         )}
 
                     </h1>
-                    <div className="float-right">
+                    <div className="desk-detail__actions">
                         <Button
                             type={'default'}
                             className={'mg-r-10'}

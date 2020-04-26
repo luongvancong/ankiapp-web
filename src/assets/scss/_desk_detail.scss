@@ -1,0 +1,16 @@
+.desk-detail {
+  &__heading-name {
+    position: relative;
+    width: 90%;
+  }
+  &__close_edit {
+    position: absolute;
+    right: -26px;
+    top: 8px;
+    cursor: pointer;
+  }
+  &__actions {
+    width: 100%;
+    float: none;
+  }
+}
