@@ -13,6 +13,18 @@ import CloseOutlined from "@ant-design/icons/es/icons/CloseOutlined";
 
 class DeskDetail extends Default {
 
+    constructor(props) {
+        super(props);
+        this.state = {
+            ...this.state,
+            cards: [],
+            cardPagination: {
+                total: 0,
+                per_page: 25
+            }
+        }
+    }
+
 
     componentDidMount() {
         super.componentDidMount();
@@ -198,7 +210,7 @@ class DeskDetail extends Default {
     };
 
     content = () => {
-        const {cardPagination, desk, isShowEditDesk, loading} = this.state;
+        const {cardPagination, desk, isShowEditDesk, loading, cards} = this.state;
         return (
             <div className="desk-detail">
                 <div className={'clearfix mg-bt-10 mg-t-10'}>
@@ -243,10 +255,12 @@ class DeskDetail extends Default {
                     </div>
                 </div>
 
+                <div className="desk-detail__pagination-info text-right mg-bt-15">Total: <b>{cards.length}/{cardPagination.total}</b></div>
+
                 <Table
                     loading={loading}
                     columns={this.getColumns()}
-                    dataSource={this.state.cards}
+                    dataSource={cards}
                     scroll={{x: 1000}}
                     pagination={{
                         current: _.get(cardPagination, 'current_page'),
