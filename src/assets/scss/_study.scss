@@ -2,7 +2,6 @@
   .card {
     text-align: center;
     position: relative;
-    min-height: calc(100vh - 100px);
     &__front {
       font-size: 30px;
       color: #198ffc;
@@ -28,7 +27,7 @@
       }
     }
     &__buttons-container {
-      position: absolute;
+      position: fixed;
       bottom: 20px;
       text-align: center;
       width: 100%;
