@@ -88,9 +88,11 @@ class DeskStudy extends Default {
                     </>
                 )}
 
+                <div className={'card__buttons-container'}>
                 {!isShowAnswer ? (
                     <Button
                         type={'primary'}
+                        className={'card__button'}
                         onClick={this.showAnswer}
                     >
                         Show answer
@@ -98,11 +100,13 @@ class DeskStudy extends Default {
                 ) : (
                     <Button
                         type={'primary'}
+                        className={'card__button'}
                         onClick={this.handleNext.bind(this, oneCard)}
                     >
                         Next
                     </Button>
                 )}
+                </div>
             </div>
         )
     };

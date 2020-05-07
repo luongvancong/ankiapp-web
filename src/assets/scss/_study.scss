@@ -1,6 +1,8 @@
 .study {
   .card {
     text-align: center;
+    position: relative;
+    min-height: calc(100vh - 100px);
     &__front {
       font-size: 30px;
       color: #198ffc;
@@ -24,6 +26,12 @@
         object-fit: cover;
         object-position: center center;
       }
+    }
+    &__buttons-container {
+      position: absolute;
+      bottom: 20px;
+      text-align: center;
+      width: 100%;
     }
   }
 }
