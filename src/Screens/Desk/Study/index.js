@@ -71,8 +71,11 @@ class DeskStudy extends Default {
                 <p className={'card__front'}>{oneCard.front}</p>
                 {isShowAnswer && (
                     <>
-                        <p className={'card__back'}>{oneCard.back}</p>
-                        <p className={'card__example'}>{oneCard.example}</p>
+                        {oneCard.ipa && (
+                            <p className={'card_ipa bold'} dangerouslySetInnerHTML={{__html: oneCard.ipa}} />
+                        )}
+                        <p className={'card__back'} dangerouslySetInnerHTML={{__html: oneCard.back}} />
+                        <p className={'card__example'} dangerouslySetInnerHTML={{__html: oneCard.example }} />
                         {oneCard.audio && (
                             <div className="card__audio">
                                 <audio controls autoPlay={true}>
