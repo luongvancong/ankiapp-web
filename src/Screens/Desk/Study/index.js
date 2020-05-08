@@ -68,7 +68,7 @@ class DeskStudy extends Default {
         }
         return (
             <div className={'card'}>
-                <p className={'card__front'}>{oneCard.front}</p>
+                <p className={'card__front'} dangerouslySetInnerHTML={{__html: oneCard.front}} />
                 {isShowAnswer && (
                     <>
                         {oneCard.ipa && (
