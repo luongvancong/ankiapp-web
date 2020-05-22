@@ -7,8 +7,10 @@ const DeskApiService = {
     update: (id, data) => http.patch(`/api/v1/desks/${id}`, data),
     delete: (id) => http.delete(`/api/v1/desks/${id}`),
     getCards: (deskId, params = {}) => http.get('/api/v1/cards', {
-        desk_id: deskId,
-        ...params
+        params: {
+            desk_id: deskId,
+            ...params
+        }
     }),
     getStudy: (deskId) => http.get(`/api/v1/desks/${deskId}/study`)
 };
