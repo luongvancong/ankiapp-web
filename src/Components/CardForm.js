@@ -3,6 +3,7 @@ import {Button, Form, Input, Upload} from "antd";
 import {
     UploadOutlined
 } from '@ant-design/icons';
+import FormEditorInput from "./FormEditorInput";
 
 class CardForm extends React.Component {
 
@@ -28,9 +29,7 @@ class CardForm extends React.Component {
                     name={'back'}
                     required={true}
                 >
-                    <Input
-
-                    />
+                    <FormEditorInput />
                 </Form.Item>
 
                 <Form.Item
@@ -38,9 +37,7 @@ class CardForm extends React.Component {
                     name={'example'}
                     required={true}
                 >
-                    <Input
-
-                    />
+                    <FormEditorInput />
                 </Form.Item>
 
                 <Form.Item

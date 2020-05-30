@@ -73,17 +73,6 @@ class DeskDetail extends Default {
                 width: 200,
             },
             {
-                title: "Back",
-                key: "back",
-                dataIndex: 'back',
-                back: 300,
-            },
-            {
-                title: "Example",
-                key: 'example',
-                dataIndex: 'example'
-            },
-            {
                 title: "Audio",
                 key: "audio",
                 dataIndex: "audio",
@@ -262,6 +251,7 @@ class DeskDetail extends Default {
                     columns={this.getColumns()}
                     dataSource={cards}
                     scroll={{x: 1000}}
+                    rowKey={record => record.id}
                     pagination={{
                         current: _.get(cardPagination, 'current_page'),
                         total: _.get(cardPagination, 'total'),
