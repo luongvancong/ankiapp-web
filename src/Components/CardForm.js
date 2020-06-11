@@ -41,6 +41,19 @@ class CardForm extends React.Component {
                 </Form.Item>
 
                 <Form.Item
+                    label={'Audio'}
+                    name={'audio'}
+                >
+                    <Upload
+                        beforeUpload={this.handleBeforeUpload.bind(this, 'audio')}
+                    >
+                        <Button>
+                            <UploadOutlined /> Upload audio
+                        </Button>
+                    </Upload>
+                </Form.Item>
+
+                <Form.Item
                     label={'Picture'}
                     name={'image'}
                 >
