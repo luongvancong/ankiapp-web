@@ -1,11 +1,10 @@
 import axios from 'axios';
 import _ from 'lodash';
-import * as env from '../env';
 import {cookieService} from "./CookieService";
 import {Modal} from "antd";
 
 const http = axios.create({
-    baseURL: env.API_URL,
+    baseURL: process.env.API_URL,
     timeout: 60000
 });
 
